@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on: workflow_dispatch
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Private Action
+        uses: actions/checkout@v2
+        with: 
+          repository: tejasd1990/arm-deploy
+          ref: 1.903
+          token: ${{ secrets.REPO_PAT }}
+          path: my-private-action
+          persist-credentials: false
+      
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+          enable-AzPSSession: true
+      
+      - name: Provate Deploy Azure Resource Manager (ARM) Template
+        uses: ./my-private-action
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: 'resourcegroup'
+          # Override the Subscription Id set by Azure Login.
+          subscriptionId: '393a91ee-f98d-43ff-b964-009bda0fdf2e'
+          # Provide the name of a resource group, only required for resource Group deployments.
+          resourceGroupName: 'tedeshpadotnet1-rg'
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: ./arm-template-storage-account4.json
+          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+          deploymentMode: 'Incremental'
+
