@@ -27,9 +27,9 @@
     {
       "copy": {
         "name": "storageAccountsLoop",
-        "count": 200,
+        "count": 30,
         "mode": "serial",
-        "batchSize": 10
+        "batchSize": 20
       },
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat('newtdsaunq', copyIndex())]",
