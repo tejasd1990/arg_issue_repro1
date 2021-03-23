@@ -25,7 +25,7 @@ jobs:
           enable-AzPSSession: true
       
       - name: Provate Deploy Azure Resource Manager (ARM) Template
-        uses: azure/arm-deploy@latest
+        uses: azure/arm-deploy@v1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: 'resourcegroup'
