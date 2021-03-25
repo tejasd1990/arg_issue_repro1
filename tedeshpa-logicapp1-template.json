@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_tedeshpa_logicapp1_name": {
+            "defaultValue": "tedeshpa-logicapp1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_tedeshpa_logicapp1_name')]",
+            "location": "southcentralus",
+            "tags": {
+                "Sample": "test"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "actions": {},
+                    "outputs": {}
+                },
+                "parameters": {}
+            }
+        }
+    ],
+    "outputs": {
+        "callBackUrl": {
+        "type": "string",
+        "value": "[listCallbackURL('/subscriptions/c00d16c7-6c1f-4c03-9be1-6934a4c49682/resourceGroups/tedeshpa-RG/providers/Microsoft.Logic/workflows/tedeshpa-logicapp1/triggers/manual', '2017-07-01').value]"
+        }
+    }
+}
