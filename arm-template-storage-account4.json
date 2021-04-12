@@ -27,7 +27,7 @@
     {
       "copy": {
         "name": "storageAccountsLoop",
-        "count": 30,
+        "count": 40,
         "mode": "serial",
         "batchSize": 20
       },
@@ -39,5 +39,11 @@
         "name": "[parameters('storageAccountType')]"
       }
     }
-  ]
+  ],
+  "outputs": {
+    "rgId": {
+      "type": "Object",
+      "value": "[resourceGroup()]"
+    }
+  }
 }

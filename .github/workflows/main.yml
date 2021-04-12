@@ -17,6 +17,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Private Action
         uses: actions/checkout@v2
+        with: 
+          repository: tejasd1990/arm-deploy
+          ref: 1.909
+          token: ${{ secrets.REPO_PAT }}
+          path: my-private-action
+          persist-credentials: false
       
       - name: Login via Az module
         uses: azure/login@v1
@@ -25,7 +31,8 @@ jobs:
           enable-AzPSSession: true
       
       - name: Provate Deploy Azure Resource Manager (ARM) Template
-        uses: azure/arm-deploy@v1
+        uses: ./my-private-action
+        #uses: azure/arm-deploy@v1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: 'resourcegroup'
